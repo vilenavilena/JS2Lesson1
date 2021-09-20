@@ -5,20 +5,20 @@ const products = [
   {id: 4, title: 'Gamepad', price: 150},
 ];
 
-const renderProduct = (product, img='https://via.placeholder.com/150') => {
-  return `<div class="product-item">
-            <img src="${img}">
-            <h3>${product.title}</h3>
-            <p>${product.price}</p>
-            <button class="buy-btn">Добавить</button>
+const renderProduct = (item, img='https://via.placeholder.com/150') => {
+  return `<div class="product-item" data-id="${this.id}">
+            <img src="${img}" alt="Img">
+            <div class="desc">
+                <h3>${item.title}</h3>
+                <p>${item.price} \u20bd</p>
+                <button class="buy-btn">Купить</button>
+            </div>
           </div>`;
 };
 
 const renderProducts = list => {
-  document.querySelector('.products').innerHTML = list.map(item =>
-  renderProduct(item)).join('');
+  document.querySelector('.products').insertAdjacentHTML('beforeend', list.map(item => renderProduct(item)).join(''));
 };
-
 renderProducts(products);
 
 /*2. Запятая ставится по умолчанию тк при присвоении любого 
@@ -28,3 +28,4 @@ renderProducts(products);
 .join() , а разделителем массива по умолчанию является запятая.
 Следовательно, нужно просто вызвать .join('') самостоятельно и в скобках
 указать ('')*/
+
