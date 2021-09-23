@@ -1,30 +1,125 @@
-const products = [
+class ProductsList {
+  constructor(container = '.products') {
+    this.container = container;
+    //массив для хранения запрошенных ответов с сервера 
+    this.goods = [];
+    // массив объектов товаров 
+    this.goodsObjects = [];
+    //вызов методов
+    this.fetchGods();
+    this.render();
+  }
+
+  //метод, который суммирует стоимость всех товаров:
+  getSum() {
+    let sum = 0;
+    for(let product of this.goodsObjects) { //product это каждый элемент массива 
+      sum += product.price; //из каждого объекта берем ценну и суммируем ее 
+    }
+      console.log(product);
+  }
+    
+  // метод, который берет эти данные 
+
+  fetchGods() {
+    this.goods = [
+      {id: 1, title: 'Notebook', price: 1000},
+      {id: 2, title: 'Mouse', price: 100},
+      {id: 3, title: 'Keyboard', price: 250},
+      {id: 4, title: 'Gamepad', price: 150},
+    ];
+  }
+
+  //метод, который отрисовывает 
+  render() {
+    const block = document.querySelector(this.container);
+
+    for (const product of this.goods) {
+      const productObject = new ProductItem(product);
+      this.goodsObjects.push(productObject);
+      //добавление в блок разметку, связанную с этим товаром
+      block.insertAdjacentHTML('beforeend', productObject.getHTMLString())
+    }
+  }
+};
+
+class ProductItem {
+  constructor(item, img='https://via.placeholder.com/150') {
+    this.id = item.id;
+    this.title = item.title;
+    this.price = item.price;
+    this.img = img; 
+  }
+
+  getHTMLString() {
+    return `<div class="product-item" data-id="${this.id}">
+    <img src="${this.img}" alt="Img">
+    <div class="desc">
+        <h3>${this.title}</h3>
+        <p>${this.price} \u20bd</p>
+        <button class="buy-btn">Купить</button>
+    </div>
+  </div>`;
+  }
+}
+
+
+//Запуск создание экземпляра productsList
+const catalog = new ProductsList();
+catalog.render();
+catalog.getSum();
+
+class Basket {
+
+  //добавить товар
+  addGoods() {
+
+  }
+  //удалить товар
+  removeGoods() {
+
+  }
+
+  //Поменять кол-во товара в корзине
+  changeCount() {
+
+  }
+
+  //Отрисовать разметку товаров
+  render() {
+
+  }
+}
+
+class ElemBasket {
+  render() {
+
+  }
+}
+
+
+/* const products = [
   {id: 1, title: 'Notebook', price: 1000},
   {id: 2, title: 'Mouse', price: 100},
   {id: 3, title: 'Keyboard', price: 250},
   {id: 4, title: 'Gamepad', price: 150},
 ];
 
-const renderProduct = (product, img='https://via.placeholder.com/150') => {
-  return `<div class="product-item">
-            <img src="${img}">
-            <h3>${product.title}</h3>
-            <p>${product.price}</p>
-            <button class="buy-btn">Добавить</button>
+const renderProduct = (item, img='https://via.placeholder.com/150') => {
+  return `<div class="product-item" data-id="${item.id}">
+            <img src="${img}" alt="Img">
+            <div class="desc">
+                <h3>${item.title}</h3>
+                <p>${item.price} \u20bd</p>
+                <button class="buy-btn">Купить</button>
+            </div>
           </div>`;
 };
 
 const renderProducts = list => {
-  document.querySelector('.products').innerHTML = list.map(item =>
-  renderProduct(item)).join('');
+  document.querySelector('.products').insertAdjacentHTML('beforeend', list.map(item => renderProduct(item)).join(''));
 };
+renderProducts(products); */
 
-renderProducts(products);
 
-/*2. Запятая ставится по умолчанию тк при присвоении любого 
-значения свойству .innerHTML элемента это значение неявно 
-преобразуется в строку, а затем анализируется как HTML. 
-По умолчанию массив преобразуется в строку с помощью метода 
-.join() , а разделителем массива по умолчанию является запятая.
-Следовательно, нужно просто вызвать .join('') самостоятельно и в скобках
-указать ('')*/
+
